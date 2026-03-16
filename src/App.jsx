@@ -79,7 +79,6 @@ export default function App() {
     { label: 'Despre Noi', href: '#despre' },
     { label: 'Produse', href: '#produse' },
     { label: 'Echipa', href: '#echipa' },
-    { label: 'Contact', href: '#contact' },
   ];
 
   const products = [
@@ -123,10 +122,10 @@ export default function App() {
   ];
 
   const teamMembers = [
-    { name: 'Andrei Popescu', role: 'Director General', color: 'from-primary to-primary-dark' },
-    { name: 'Maria Ionescu', role: 'Manager Vânzări', color: 'from-dark to-dark-lighter' },
-    { name: 'Cristian Moldovan', role: 'Inginer Logistică', color: 'from-primary-dark to-dark' },
-    { name: 'Elena Rus', role: 'Specialist Relații Clienți', color: 'from-dark-lighter to-primary' },
+    { name: 'Pop Razvan Daniel', role: 'Director General', image: '/razvi.jpeg', color: 'from-primary to-primary-dark' },
+    { name: 'Popa Ruxandra Ioana ', role: 'Manager Vânzări', image: '/ruxi.jpeg', color: 'from-dark to-dark-lighter' },
+    { name: 'Popa Miruna', role: 'Inginer Logistică', image: '/miru.jpg', color: 'from-primary-dark to-dark' },
+    { name: 'Vinczi Debora Alexandra', role: 'Specialist Relații Clienți', image: '/debo.jpeg', color: 'from-dark-lighter to-primary' },
   ];
 
   const handleSubmit = (e) => {
@@ -148,8 +147,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24 py-4 flex items-center justify-between">
           {/* Logo */}
           <a href="#acasa" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-primary/40 transition-shadow duration-300">
-              <span className="text-white font-heading font-black text-lg">B</span>
+            <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
+              <img src="/logo.png" alt="Beto Base Logo" className="w-full h-full object-contain" />
             </div>
             <div>
               <span className="font-heading font-bold text-xl text-dark tracking-tight">BETO BASE</span>
@@ -219,7 +218,7 @@ export default function App() {
         <motion.div style={{ y: heroY }} className="absolute inset-0 -top-20">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/hero-bg.png)' }}
+            style={{ backgroundImage: 'url(/bg3.jpg)' }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/70 to-dark/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
@@ -576,17 +575,14 @@ export default function App() {
                   className="group cursor-default"
                 >
                   <div className="relative rounded-2xl overflow-hidden bg-dark-lighter shadow-lg">
-                    {/* Avatar placeholder */}
-                    <div className={`aspect-[3/4] bg-gradient-to-br ${member.color} relative`}>
-                      <div className="absolute inset-0 bg-black/10" />
-                      {/* Silhouette icon */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-28 h-28 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border-2 border-white/20">
-                          <span className="text-white/80 text-5xl font-heading font-bold">
-                            {member.name.charAt(0)}
-                          </span>
-                        </div>
-                      </div>
+                    {/* Member Image */}
+                    <div className="aspect-[3/4] relative overflow-hidden">
+                      <img 
+                        src={member.image} 
+                        alt={member.name}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
                       {/* Hover overlay */}
                       <motion.div
                         initial={{ opacity: 0 }}
@@ -781,8 +777,8 @@ export default function App() {
             {/* Logo & about */}
             <div className="lg:col-span-2">
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-lg flex items-center justify-center shadow-lg">
-                  <span className="text-white font-heading font-black text-lg">B</span>
+                <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
+                  <img src="/logo.png" alt="Beto Base Logo" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <span className="font-heading font-bold text-xl text-white tracking-tight">BETO BASE</span>
