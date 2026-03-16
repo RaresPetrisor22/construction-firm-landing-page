@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useInView, useScroll, useTransform, AnimatePresence, animate } from 'framer-motion';
 import {
   FiMenu, FiX, FiPhone, FiMail, FiMapPin, FiArrowRight,
   FiArrowDown, FiCheck, FiSend, FiAward, FiShield, FiTruck
@@ -7,9 +7,6 @@ import {
 
 /* ───────────────────── Reusable scroll-triggered wrapper ───────────────────── */
 function Reveal({ children, direction = 'up', delay = 0, className = '' }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
-
   const variants = {
     hidden: {
       opacity: 0,
@@ -24,9 +21,9 @@ function Reveal({ children, direction = 'up', delay = 0, className = '' }) {
 
   return (
     <motion.div
-      ref={ref}
       initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
+      whileInView="visible"
+      viewport={{ once: true, margin: '-80px' }}
       variants={variants}
       className={className}
     >
@@ -36,24 +33,21 @@ function Reveal({ children, direction = 'up', delay = 0, className = '' }) {
 }
 
 /* ───────────────────── Counter Animation ───────────────────── */
-function AnimatedCounter({ target, suffix = '', duration = 2 }) {
+function AnimatedCounter({ target, suffix = '', duration = 1.5 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
   const [count, setCount] = useState(0);
 
-  if (isInView && count === 0) {
-    let start = 0;
-    const step = target / (duration * 60);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 1000 / 60);
-  }
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, target, {
+        duration,
+        ease: "easeOut",
+        onUpdate: (value) => setCount(Math.floor(value)),
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, target, duration]);
 
   return <span ref={ref}>{count}{suffix}</span>;
 }
@@ -115,10 +109,10 @@ export default function App() {
   ];
 
   const stats = [
-    { value: 10, suffix: '+', label: 'Ani de Experiență', icon: <FiAward /> },
-    { value: 500, suffix: '+', label: 'Proiecte Finalizate', icon: <FiCheck /> },
-    { value: 100, suffix: '%', label: 'Calitate Garantată', icon: <FiShield /> },
-    { value: 50, suffix: '+', label: 'Parteneri de Încredere', icon: <FiTruck /> },
+    { value: 2, suffix: '+', label: 'Ani de Experiență', icon: <FiAward /> },
+    { value: 312, suffix: '+', label: 'Proiecte Finalizate', icon: <FiCheck /> },
+    { value: 98, suffix: '%', label: 'Calitate Garantată', icon: <FiShield /> },
+    { value: 16, suffix: '+', label: 'Parteneri de Încredere', icon: <FiTruck /> },
   ];
 
   const teamMembers = [
