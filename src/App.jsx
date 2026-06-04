@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, useScroll, useTransform, AnimatePresence, animate } from 'framer-motion';
 import {
   FiMenu, FiX, FiPhone, FiMail, FiMapPin, FiArrowRight,
-  FiArrowDown, FiCheck, FiSend, FiAward, FiShield, FiTruck
+  FiArrowDown, FiCheck, FiSend, FiAward, FiShield, FiTruck,
+  FiDownload, FiFileText
 } from 'react-icons/fi';
 
 /* ───────────────────── Reusable scroll-triggered wrapper ───────────────────── */
@@ -72,7 +73,26 @@ export default function App() {
     { label: 'Acasă', href: '#acasa' },
     { label: 'Despre Noi', href: '#despre' },
     { label: 'Produse', href: '#produse' },
+    { label: 'Cataloage', href: '#cataloage' },
     { label: 'Echipa', href: '#echipa' },
+  ];
+
+  const catalogs = [
+    {
+      title: 'Catalog General',
+      desc: 'Prezentarea completă a companiei Beto Base și a serviciilor oferite.',
+      file: '/catalog_general_BetoBase.pdf',
+    },
+    {
+      title: 'Catalog Materiale',
+      desc: 'Gama completă de materiale de construcții cu specificații tehnice detaliate.',
+      file: '/catalog_materiale_betobase.pdf',
+    },
+    {
+      title: 'Catalog Beto Base',
+      desc: 'Cataloagul nostru de produse și soluții pentru proiectul tău.',
+      file: '/batobasecatalog.pdf',
+    },
   ];
 
   const products = [
@@ -464,6 +484,61 @@ export default function App() {
                     Află mai multe <FiArrowRight />
                   </div>
                 </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════ CATALOGS SECTION ═══════════════════ */}
+      <section id="cataloage" className="py-24 md:py-32 bg-dark relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(230,59,46,0.12),transparent_55%)]" />
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl translate-y-1/2 translate-x-1/2" />
+
+        <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24 relative z-10">
+          <div className="text-center mb-16">
+            <Reveal>
+              <span className="inline-block text-primary font-heading font-bold text-sm tracking-[0.2em] uppercase mb-4">
+                Resurse
+              </span>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="font-heading font-black text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+                Cataloagele <span className="text-primary">Noastre</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-white/50 text-lg max-w-2xl mx-auto">
+                Descarcă cataloagele Beto Base și explorează în detaliu gama completă de
+                produse, specificații tehnice și soluții pentru proiectul tău.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {catalogs.map((cat, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <motion.a
+                  href={cat.file}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -8 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  className="flex flex-col h-full bg-dark-lighter rounded-2xl p-8 border border-white/5 hover:border-primary/40 shadow-lg hover:shadow-primary/10 transition-all duration-500 group"
+                >
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                    <FiFileText />
+                  </div>
+                  <h3 className="font-heading font-bold text-xl text-white mb-3 group-hover:text-primary transition-colors duration-300">
+                    {cat.title}
+                  </h3>
+                  <p className="text-white/50 leading-relaxed text-[15px] mb-6 flex-grow">
+                    {cat.desc}
+                  </p>
+                  <div className="inline-flex items-center gap-2 text-primary font-semibold text-sm">
+                    <FiDownload className="text-lg" /> Descarcă PDF
+                  </div>
+                </motion.a>
               </Reveal>
             ))}
           </div>
